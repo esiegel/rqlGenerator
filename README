@@ -1,33 +1,44 @@
-ANTLR4 grammar for Resource Query Language.
+# ANTLR4 grammar for Resource Query Language.
+## Adaptation of this: https://github.com/kriszyp/rql
 
-Adaptation of this: https://github.com/kriszyp/rql
+## SET Antlr4 classpath to whereever the jar is.
+export CLASSPATH=".:/usr/local/lib/antlr-4.0-complete.jar:$CLASSPATH"
 
-and(<query>,<query>,...)                  - Applies all the given queries
-or(<query>,<query>,...)                   - The union of the given queries
+## Alias useful antlr commands
+alias antlr4='java -jar /usr/local/lib/antlr-4.0-complete.jar'
+alias grun='java org.antlr.v4.runtime.misc.TestRig'
 
-count()                                   - Returns the count of the number of records in the query's result set
-distinct()                                - Returns a result set with duplicates removed
-eq(<property>,<value>)                    - Filters for objects where the specified property's value is equal to the provided value
-first()                                   - Returns the first record of the query's result set
-ge(<property>,<value>)                    - Filters for objects where the specified property's value is greater than or equal to the provided value
-gt(<property>,<value>)                    - Filters for objects where the specified property's value is greater than the provided value
-in(<property>,<array-of-values>)          - Filters for objects where the specified property's value is in the provided array
-le(<property>,<value>)                    - Filters for objects where the specified property's value is less than or equal to the provided value
-limit(count,start,maxCount)               - Returns the given range of objects from the result set
-lt(<property>,<value>)                    - Filters for objects where the specified property's value is less than the provided value
-ne(<property>,<value>)                    - Filters for objects where the specified property's value is not equal to the provided value
-select(<property>,<property>,...)         - Trims each object down to the set of properties defined in the arguments
-sort(<+|-><property)                      - Sorts by the given property in order specified by the prefix (+ for ascending, - for descending)
+## Testing rql
+antlr4 -o output rql.g4
+cd output
+grun rql program -tree
 
-aggregate(<property|function>,...)        - Aggregates the array, grouping by objects that are distinct for the provided properties, and then reduces the remaining other property values using the provided functions
-contains(<property>,<value | expression>) - Filters for objects where the specified property's value is an array and the array contains any value that equals the provided value or satisfies the provided expression.
-excludes(<property>,<value | expression>) - Filters for objects where the specified property's value is an array and the array does not contain any of value that equals the provided value or satisfies the provided expression.
-max(<property?>)                          - Finds the maximum of every value in the array or if the property argument is provided, returns the maximum of the value of property for every object in the array
-mean(<property?>)                         - Finds the mean of every value in the array or if the property argument is provided, returns the mean of the value of property for every object in the array
-min(<property?>)                          - Finds the minimum of every value in the array or if the property argument is provided, returns the minimum of the value of property for every object in the array
-one()                                     - Returns the first and only record of the query's result set, or produces an error if the query's result set has more or less than one record in it.
-out(<property>,<array-of-values>)         - Filters for objects where the specified property's value is not in the provided array
-recurse(<property?>)                      - Recursively searches, looking in children of the object as objects in arrays in the given property value
-rel(<relation name?>,<query>)             - Applies the provided query against the linked data of the provided relation name.
-sum(<property?>)                          - Finds the sum of every value in the array or if the property argument is provided, returns the sum of the value of property for every object in the array
-values(<property>)                        - Returns an array of the given property value for each object
+# Will support
+  and(<query>,<query>,...)                  - Applies all the given queries
+  or(<query>,<query>,...)                   - The union of the given queries
+  count()                                   - Returns the count of the number of records in the query's result set
+  distinct()                                - Returns a result set with duplicates removed
+  eq(<property>,<value>)                    - Filters for objects where the specified property's value is equal to the provided value
+  first()                                   - Returns the first record of the query's result set
+  ge(<property>,<value>)                    - Filters for objects where the specified property's value is greater than or equal to the provided value
+  gt(<property>,<value>)                    - Filters for objects where the specified property's value is greater than the provided value
+  in(<property>,<array-of-values>)          - Filters for objects where the specified property's value is in the provided array
+  le(<property>,<value>)                    - Filters for objects where the specified property's value is less than or equal to the provided value
+  limit(count,start,maxCount)               - Returns the given range of objects from the result set
+  lt(<property>,<value>)                    - Filters for objects where the specified property's value is less than the provided value
+  ne(<property>,<value>)                    - Filters for objects where the specified property's value is not equal to the provided value
+  select(<property>,<property>,...)         - Trims each object down to the set of properties defined in the arguments
+  sort(<+|-><property)                      - Sorts by the given property in order specified by the prefix (+ for ascending, - for descending)
+  
+  aggregate(<property|function>,...)        - Aggregates the array, grouping by objects that are distinct for the provided properties, and then reduces the remaining other property values using the provided functions
+  contains(<property>,<value | expression>) - Filters for objects where the specified property's value is an array and the array contains any value that equals the provided value or satisfies the provided expression.
+  excludes(<property>,<value | expression>) - Filters for objects where the specified property's value is an array and the array does not contain any of value that equals the provided value or satisfies the provided expression.
+  max(<property?>)                          - Finds the maximum of every value in the array or if the property argument is provided, returns the maximum of the value of property for every object in the array
+  mean(<property?>)                         - Finds the mean of every value in the array or if the property argument is provided, returns the mean of the value of property for every object in the array
+  min(<property?>)                          - Finds the minimum of every value in the array or if the property argument is provided, returns the minimum of the value of property for every object in the array
+  one()                                     - Returns the first and only record of the query's result set, or produces an error if the query's result set has more or less than one record in it.
+  out(<property>,<array-of-values>)         - Filters for objects where the specified property's value is not in the provided array
+  recurse(<property?>)                      - Recursively searches, looking in children of the object as objects in arrays in the given property value
+  rel(<relation name?>,<query>)             - Applies the provided query against the linked data of the provided relation name.
+  sum(<property?>)                          - Finds the sum of every value in the array or if the property argument is provided, returns the sum of the value of property for every object in the array
+  values(<property>)                        - Returns an array of the given property value for each object
