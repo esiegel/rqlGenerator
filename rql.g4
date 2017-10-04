@@ -21,6 +21,7 @@ query_fragment
  | 'gt' OPAR ID COMMA VALUE CPAR
  | 'in' OPAR ID COMMA VALUE_ARRAY CPAR
  | 'le' OPAR ID COMMA VALUE CPAR
+ | 'lt' OPAR ID COMMA VALUE CPAR
  | 'limit' OPAR INT CPAR
  | 'ne' OPAR ID COMMA VALUE CPAR
  | 'select' OPAR ID (COMMA ID)* CPAR
@@ -39,7 +40,7 @@ SORT_ORDER
  ;
 
 VALUE_ARRAY
- : OBRK VALUE* CBRK
+ : OBRK VALUE? (COMMA VALUE)* CBRK
  ;
 
 BOOLOP_SHORT 
@@ -68,7 +69,7 @@ TRUE : 'true';
 FALSE : 'false';
 
 ID
- : [a-zA-Z_] [a-zA-Z_0-9]*
+ : [a-zA-Z_] [a-zA-Z_0-9.]*
  ;
 
 
